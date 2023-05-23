@@ -3,10 +3,13 @@ import util
 import arb_algo
 
 API_KEY = "c462bd1d951f7f7011af81eb210d8677"
-MARKET = "h2h"
+MARKETS = "h2h"
 TOGGLE_LIVE = True
-DATE = "2023-05-13T20:02:00Z"
-
+REGIONS = 'us'
+ODDS_FORMAT = 'american'
+BOOKMAKERS = 'fanduel,draftkings,betmgm,foxbet,barstool,pointsbetus,circasports,wynnbet,unibet_us,betus,twinspires,betonlineag'
+SPORTS = ["basketball_nba"]
+DATE = "2023-05-22T01:02:00Z"
 
 def get_all_sports_as_list():
     """
@@ -20,17 +23,20 @@ def get_all_sports_as_list():
     return util.parse_markets_list(data)
 
 
-def get_all_sports_data():
+def get_current_sports_data():
     """
     function to get arbs from all available markets
     """
 
     res = []
-    # sports = get_all_sports_as_list()
-    sports = ["basketball_nba"]
-    for sport in sports:
-        request_url = "https://api.the-odds-api.com/v4/sports/{sport}/odds/?regions=us&oddsFormat=american&markets={market}&apiKey={api_key}".format(
-            sport=sport, api_key=API_KEY, market=MARKET
+    for SPORT in SPORTS:
+        request_url = "https://api.the-odds-api.com/v4/sports/{sport}/odds/?regions={regions}&oddsFormat={odds_format}&markets={markets}&bookmakers={bookmakers}&apiKey={api_key}".format(
+            sport = SPORT, 
+            api_key = API_KEY, 
+            markets = MARKETS,
+            regions = REGIONS,
+            odds_format = ODDS_FORMAT,
+            bookmakers = BOOKMAKERS
         )
         data = requests.get(request_url)
         data = util.parse_market_data(data)
@@ -54,11 +60,15 @@ def get_historical_sports_data():
     """
 
     res = []
-    # sports = get_all_sports_as_list()
-    sports = ["baseball_mlb"]
-    for sport in sports:
-        request_url = "https://api.the-odds-api.com/v4/sports/{sport}/odds-history/?regions=us&oddsFormat=american&markets={market}&apiKey={api_key}&date={date}".format(
-            sport=sport, api_key=API_KEY, market=MARKET, date=DATE
+    for SPORT in SPORTS:
+        request_url = "https://api.the-odds-api.com/v4/sports/{sport}/odds-history/?regions={regions}&oddsFormat={odds_format}&markets={markets}&bookmakers={bookmakers}&date={date}&apiKey={api_key}".format(
+            date = DATE,
+            sport = SPORT, 
+            api_key = API_KEY, 
+            markets = MARKETS,
+            regions = REGIONS,
+            odds_format = ODDS_FORMAT,
+            bookmakers = BOOKMAKERS
         )
         data = requests.get(request_url)
         data = util.parse_historical_market_data(data)
