@@ -9,7 +9,7 @@ REGIONS = 'us'
 ODDS_FORMAT = 'american'
 BOOKMAKERS = 'fanduel,draftkings,betmgm,foxbet,barstool,pointsbetus,circasports,wynnbet,unibet_us,betus,twinspires,betonlineag'
 SPORTS = ["basketball_nba"]
-DATE = "2023-05-22T01:02:00Z"
+DATE = "2023-05-22T01:13:00Z"
 
 def get_all_sports_as_list():
     """
