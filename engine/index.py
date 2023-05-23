@@ -13,7 +13,7 @@ DATE = "2023-05-22T01:13:00Z"
 
 def get_all_sports_as_list():
     """
-    function to get list of available markets
+    function to get list of available sports markets
     """
 
     request_url = "https://api.the-odds-api.com/v4/sports?apiKey={api_key}".format(
@@ -22,6 +22,20 @@ def get_all_sports_as_list():
     data = requests.get(request_url)
     return util.parse_markets_list(data)
 
+def get_all_upcoming_odds():
+    """
+    function to retrieve of all live games and the next 8 upcoming games across all sports
+    """
+
+    request_url = "https://api.the-odds-api.com/v4/sports/{sport}/odds/?regions={regions}&oddsFormat={odds_format}&markets={markets}&apiKey={api_key}".format(
+            sport = 'upcoming', 
+            api_key = API_KEY, 
+            markets = MARKETS,
+            regions = REGIONS,
+            odds_format = ODDS_FORMAT,
+        )
+    data = requests.get(request_url)
+    return data
 
 def get_current_sports_data():
     """
@@ -52,7 +66,6 @@ def get_current_sports_data():
         ) = arb_algo.detect_arbs_market(data, TOGGLE_LIVE)
         res.append(obj)
     return res
-
 
 def get_historical_sports_data():
     """
@@ -85,12 +98,27 @@ def get_historical_sports_data():
         res.append(obj)
     return res
 
-
 def main():
     arbs = get_historical_sports_data()
+    #arbs = get_current_sports_data()
     print(util.pretty_print_JSON(arbs))
     util.add_arbs_to_firebase(arbs)
 
+def getSports():
+    available_sports = get_all_sports_as_list()
+    print(util.pretty_print_JSON(available_sports))
+
+def getOdds():
+    if get_all_upcoming_odds().status_code != 200:
+        print(f'Failed to get odds: status_code {get_all_upcoming_odds().status_code}, response body {get_all_upcoming_odds().text}')
+    else:
+        odds_json = get_all_upcoming_odds().json()
+        print(util.pretty_print_JSON(odds_json))
+        print('Number of events:', len(odds_json))
+
+        # Check the usage quota of the API
+        print('Remaining requests', get_all_upcoming_odds().headers['x-requests-remaining'])
+        print('Used requests', get_all_upcoming_odds().headers['x-requests-used'])
 
 if __name__ == "__main__":
     main()

@@ -1,6 +1,5 @@
 import util
 
-
 def american_odds_to_implied_prob(american_odds):
     """
     function to convert american odds to implied probability
@@ -48,19 +47,15 @@ def detect_arbs_game(game_obj):
                 obj["bookmaker_2"] = odds[j]["bookmaker"]
                 obj["team_2"] = odds[j]["team_2"]
                 obj["price_2"] = odds[j]["price_2"]
-                if (
-                    obj["bookmaker_1"] != "mybookieag"
-                    and obj["bookmaker_2"] != "mybookieag"
-                ):
-                    if "point_1" in odds[i] and "point_2" in odds[j]:
-                        obj["point_1"] = odds[i]["point_1"]
-                        obj["point_2"] = odds[j]["point_2"]
-                        if abs(odds[i]["point_1"]) == abs(odds[j]["point_2"]):
-                            res["arbs"].append(obj)
-                            count += 1
-                    else:
+                if "point_1" in odds[i] and "point_2" in odds[j]:
+                    obj["point_1"] = odds[i]["point_1"]
+                    obj["point_2"] = odds[j]["point_2"]
+                    if abs(odds[i]["point_1"]) == abs(odds[j]["point_2"]):
                         res["arbs"].append(obj)
                         count += 1
+                else:
+                    res["arbs"].append(obj)
+                    count += 1
             # check price2 of first vendor with price 1 of second vendor
             if validate_arb(odds[i]["price_2"], odds[j]["price_1"]) and i != j:
                 obj = {}
@@ -71,19 +66,15 @@ def detect_arbs_game(game_obj):
                 obj["bookmaker_2"] = odds[j]["bookmaker"]
                 obj["team_2"] = odds[j]["team_1"]
                 obj["price_2"] = odds[j]["price_1"]
-                if (
-                    obj["bookmaker_1"] != "mybookieag"
-                    and obj["bookmaker_2"] != "mybookieag"
-                ):
-                    if "point_1" in odds[i] and "point_2" in odds[j]:
-                        obj["point_1"] = odds[i]["point_2"]
-                        obj["point_2"] = odds[j]["point_1"]
-                        if abs(odds[i]["point_2"]) == abs(odds[j]["point_1"]):
-                            res["arbs"].append(obj)
-                            count += 1
-                    else:
+                if "point_1" in odds[i] and "point_2" in odds[j]:
+                    obj["point_1"] = odds[i]["point_2"]
+                    obj["point_2"] = odds[j]["point_1"]
+                    if abs(odds[i]["point_2"]) == abs(odds[j]["point_1"]):
                         res["arbs"].append(obj)
                         count += 1
+                else:
+                    res["arbs"].append(obj)
+                    count += 1
     res["Arbitrage Opportunities"] = count
     return res
 
