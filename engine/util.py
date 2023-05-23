@@ -2,6 +2,7 @@ from datetime import datetime
 from firebase import firestore_client
 import pytz
 import json
+import hashlib
 
 # returns true if game is live, returns false if game is not live
 def is_live(commenceTime):
@@ -150,8 +151,10 @@ def add_arbs_to_firebase(arb_data):
                     }
                 )
                 for arb in event["arbs"]:
-                    arb_coll = event_ref.collection("arbs")
-                    arb_coll.add(
+                    key = arb["bookmaker_1"] + arb["team_1"] + str(arb["price_1"]) + arb["bookmaker_2"] + arb["team_2"] + str(arb["price_2"]) + arb["timestamp"]
+                    id = hashlib.sha256(key.encode('utf-8')).hexdigest()
+                    arb_coll = event_ref.collection("arbs").document(id)
+                    arb_coll.set(
                         {
                             "bookmaker_1": arb["bookmaker_1"],
                             "team_1": arb["team_1"],

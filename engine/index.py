@@ -5,7 +5,7 @@ import arb_algo
 API_KEY = "c462bd1d951f7f7011af81eb210d8677"
 MARKET = 'h2h'
 TOGGLE_LIVE = True
-DATE = '2023-05-22T01:02:00Z'
+DATE = '2023-05-13T20:02:00Z'
 
 def get_all_sports_as_list():
     '''
@@ -45,7 +45,7 @@ def get_historical_sports_data():
 
     res = []
     #sports = get_all_sports_as_list()
-    sports = ['basketball_nba']
+    sports = ['baseball_mlb']
     for sport in sports:
         request_url = 'https://api.the-odds-api.com/v4/sports/{sport}/odds-history/?regions=us&oddsFormat=american&markets={market}&apiKey={api_key}&date={date}'.format(sport=sport, api_key=API_KEY, market = MARKET, date = DATE)
         data = requests.get(request_url)
