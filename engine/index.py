@@ -24,7 +24,7 @@ def get_all_sports_as_list():
 
 def get_all_upcoming_odds():
     """
-    function to retrieve of all live games and the next 8 upcoming games across all sports
+    function to retrieve of all live games and the next 8 upcoming games across all sports markets
     """
 
     request_url = "https://api.the-odds-api.com/v4/sports/{sport}/odds/?regions={regions}&oddsFormat={odds_format}&markets={markets}&apiKey={api_key}".format(
