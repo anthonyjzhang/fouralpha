@@ -5,11 +5,18 @@ import arb_algo
 API_KEY = "c462bd1d951f7f7011af81eb210d8677"
 MARKETS = "h2h"
 TOGGLE_LIVE = True
-REGIONS = 'us'
-ODDS_FORMAT = 'american'
-BOOKMAKERS = 'fanduel,draftkings,betmgm,foxbet,barstool,pointsbetus,circasports,wynnbet,unibet_us,betus,twinspires,betonlineag'
-SPORTS = ["basketball_nba", "americanfootball_nfl", "icehockey_nhl", "americanfootball_ncaaf", "baseball_mlb"]
+REGIONS = "us"
+ODDS_FORMAT = "american"
+BOOKMAKERS = "fanduel,draftkings,betmgm,foxbet,barstool,pointsbetus,circasports,wynnbet,unibet_us,betus,twinspires,betonlineag"
+SPORTS = [
+    "basketball_nba",
+    "americanfootball_nfl",
+    "icehockey_nhl",
+    "americanfootball_ncaaf",
+    "baseball_mlb",
+]
 DATE = "2023-04-09T20:33:00Z"
+
 
 def get_all_sports_as_list():
     """
@@ -22,20 +29,22 @@ def get_all_sports_as_list():
     data = requests.get(request_url)
     return util.parse_markets_list(data)
 
+
 def get_all_upcoming_odds():
     """
     function to retrieve of all live games and the next 8 upcoming games across all sports markets
     """
 
     request_url = "https://api.the-odds-api.com/v4/sports/{sport}/odds/?regions={regions}&oddsFormat={odds_format}&markets={markets}&apiKey={api_key}".format(
-            sport = 'upcoming', 
-            api_key = API_KEY, 
-            markets = MARKETS,
-            regions = REGIONS,
-            odds_format = ODDS_FORMAT,
-        )
+        sport="upcoming",
+        api_key=API_KEY,
+        markets=MARKETS,
+        regions=REGIONS,
+        odds_format=ODDS_FORMAT,
+    )
     data = requests.get(request_url)
     return data
+
 
 def get_current_sports_data():
     """
@@ -45,12 +54,12 @@ def get_current_sports_data():
     res = []
     for SPORT in SPORTS:
         request_url = "https://api.the-odds-api.com/v4/sports/{sport}/odds/?regions={regions}&oddsFormat={odds_format}&markets={markets}&bookmakers={bookmakers}&apiKey={api_key}".format(
-            sport = SPORT, 
-            api_key = API_KEY, 
-            markets = MARKETS,
-            regions = REGIONS,
-            odds_format = ODDS_FORMAT,
-            bookmakers = BOOKMAKERS
+            sport=SPORT,
+            api_key=API_KEY,
+            markets=MARKETS,
+            regions=REGIONS,
+            odds_format=ODDS_FORMAT,
+            bookmakers=BOOKMAKERS,
         )
         data = requests.get(request_url)
         data = util.parse_market_data(data)
@@ -67,6 +76,7 @@ def get_current_sports_data():
         res.append(obj)
     return res
 
+
 def get_historical_sports_data():
     """
     function to get historical arbs from all available markets
@@ -75,13 +85,13 @@ def get_historical_sports_data():
     res = []
     for SPORT in SPORTS:
         request_url = "https://api.the-odds-api.com/v4/sports/{sport}/odds-history/?regions={regions}&oddsFormat={odds_format}&markets={markets}&bookmakers={bookmakers}&date={date}&apiKey={api_key}".format(
-            date = DATE,
-            sport = SPORT, 
-            api_key = API_KEY, 
-            markets = MARKETS,
-            regions = REGIONS,
-            odds_format = ODDS_FORMAT,
-            bookmakers = BOOKMAKERS
+            date=DATE,
+            sport=SPORT,
+            api_key=API_KEY,
+            markets=MARKETS,
+            regions=REGIONS,
+            odds_format=ODDS_FORMAT,
+            bookmakers=BOOKMAKERS,
         )
         data = requests.get(request_url)
         data = util.parse_historical_market_data(data)
@@ -98,27 +108,35 @@ def get_historical_sports_data():
         res.append(obj)
     return res
 
-def main():
-    arbs = get_historical_sports_data()
-    #arbs = get_current_sports_data()
-    print(util.pretty_print_JSON(arbs))
-    util.add_arbs_to_firebase(arbs)
 
 def getSports():
     available_sports = get_all_sports_as_list()
     print(util.pretty_print_JSON(available_sports))
 
+
 def getOdds():
     if get_all_upcoming_odds().status_code != 200:
-        print(f'Failed to get odds: status_code {get_all_upcoming_odds().status_code}, response body {get_all_upcoming_odds().text}')
+        print(
+            f"Failed to get odds: status_code {get_all_upcoming_odds().status_code}, response body {get_all_upcoming_odds().text}"
+        )
     else:
         odds_json = get_all_upcoming_odds().json()
         print(util.pretty_print_JSON(odds_json))
-        print('Number of events:', len(odds_json))
+        print("Number of events:", len(odds_json))
 
         # Check the usage quota of the API
-        print('Remaining requests', get_all_upcoming_odds().headers['x-requests-remaining'])
-        print('Used requests', get_all_upcoming_odds().headers['x-requests-used'])
+        print(
+            "Remaining requests",
+            get_all_upcoming_odds().headers["x-requests-remaining"],
+        )
+        print("Used requests", get_all_upcoming_odds().headers["x-requests-used"])
+
+
+def main():
+    arbs = get_historical_sports_data()
+    print(util.pretty_print_JSON(arbs))
+    util.add_arbs_to_firebase(arbs)
+
 
 if __name__ == "__main__":
     main()
