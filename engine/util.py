@@ -46,6 +46,7 @@ def parse_market_data(response_data):
     for i in range(len(data)):
         # assign id and odds array to each game object
         game_obj = {}
+        game_obj["timestamp"] = datetime.now().isoformat()
         game_obj["id"] = data[i]["id"]
         game_obj["sport_key"] = data[i]["sport_key"]
         game_obj["sport_title"] = data[i]["sport_title"]
