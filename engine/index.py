@@ -4,7 +4,6 @@ import arb_algo
 import os
 from dotenv import load_dotenv
 
-#API_KEY = "c462bd1d951f7f7011af81eb210d8677"
 load_dotenv()
 
 API_KEY = os.getenv("API_KEY")
