@@ -1,8 +1,13 @@
 import requests
 import util
 import arb_algo
+import os
+from dotenv import load_dotenv
 
-API_KEY = "c462bd1d951f7f7011af81eb210d8677"
+#API_KEY = "c462bd1d951f7f7011af81eb210d8677"
+load_dotenv()
+
+API_KEY = os.getenv("API_KEY")
 MARKETS = "h2h"
 TOGGLE_LIVE = True
 REGIONS = "us"
@@ -15,7 +20,7 @@ SPORTS = [
     "americanfootball_ncaaf",
     "baseball_mlb",
 ]
-DATE = "2023-04-09T20:33:00Z"
+DATE = "2023-04-09T20:45:00Z"
 
 
 def get_all_sports_as_list():
@@ -133,9 +138,10 @@ def getOdds():
 
 
 def main():
-    arbs = get_current_sports_data()
+    #arbs = get_current_sports_data()
+    arbs = get_historical_sports_data()
     print(util.pretty_print_JSON(arbs))
-    # util.add_arbs_to_firebase(arbs)
+    util.add_arbs_to_firebase(arbs)
 
 
 if __name__ == "__main__":
