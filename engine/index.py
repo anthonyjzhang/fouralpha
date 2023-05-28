@@ -137,8 +137,8 @@ def getOdds():
 
 
 def main():
-    #arbs = get_current_sports_data()
-    arbs = get_historical_sports_data()
+    arbs = get_current_sports_data()
+    #arbs = get_historical_sports_data()
     print(util.pretty_print_JSON(arbs))
     util.add_arbs_to_firebase(arbs)
 
