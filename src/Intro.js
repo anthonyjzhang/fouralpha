@@ -16,9 +16,8 @@ export default function Intro({ togglePage }) {
           <h5>
             By taking advantage of discrepancies in 10+ bookmakers' betting
             lines, fouralpha automates the detection of arbitrage opportunities
-            across multiple live and upcoming sporting events to
-            allow users access to bets that yield a guaranteed return on
-            investment.
+            across multiple live and upcoming sporting events to allow users
+            access to bets that yield a guaranteed return on investment.
           </h5>
         </div>
       </div>
@@ -28,7 +27,7 @@ export default function Intro({ togglePage }) {
             variant="outlined"
             size="large"
             onClick={() => {
-                togglePage();
+              togglePage();
             }}
           >
             View Opportunities
