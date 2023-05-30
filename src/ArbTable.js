@@ -26,7 +26,7 @@ export default function ArbTable({ arbData }) {
                 <h4>Event Date</h4>
               </TableCell>
               <TableCell align="left">
-                <h4>Event</h4>
+                <h4>Market</h4>
               </TableCell>
               <TableCell align="left">
                 <h4>Bets</h4>
