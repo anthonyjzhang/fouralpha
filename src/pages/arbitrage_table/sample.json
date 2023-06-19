@@ -1,0 +1,46 @@
+[
+   {
+      "team_1":"Arkansas State Red Wolves",
+      "bookmaker_2":"foxbet",
+      "bookmaker_1":"fanduel",
+      "price_1":470,
+      "price_2":-357,
+      "timestamp":"2022-10-29T20:30:39Z",
+      "team_2":"South Alabama Jaguars",
+      "market":"americanfootball_ncaaf",
+      "percent":"4.53"
+   },
+   {
+      "team_1":"South Alabama Jaguars",
+      "bookmaker_2":"unibet_us",
+      "bookmaker_1":"draftkings",
+      "price_1":-475,
+      "price_2":480,
+      "timestamp":"2022-10-29T20:30:39Z",
+      "team_2":"Arkansas State Red Wolves",
+      "market":"americanfootball_ncaaf",
+      "percent":"0.15"
+   },
+   {
+      "team_1":"Arkansas State Red Wolves",
+      "bookmaker_2":"foxbet",
+      "bookmaker_1":"circasports",
+      "price_1":491,
+      "price_2":-357,
+      "timestamp":"2022-10-29T20:30:39Z",
+      "team_2":"South Alabama Jaguars",
+      "market":"americanfootball_ncaaf",
+      "percent":"5.22"
+   },
+   {
+      "team_1":"South Alabama Jaguars",
+      "bookmaker_2":"twinspires",
+      "bookmaker_1":"draftkings",
+      "price_1":-475,
+      "price_2":480,
+      "timestamp":"2022-10-29T20:30:39Z",
+      "team_2":"Arkansas State Red Wolves",
+      "market":"americanfootball_ncaaf",
+      "percent":"0.15"
+   }
+]
