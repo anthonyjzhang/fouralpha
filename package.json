@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@splidejs/react-splide": "^0.7.12",
+    "firebase": "^9.22.2",
     "gsap": "^3.12.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

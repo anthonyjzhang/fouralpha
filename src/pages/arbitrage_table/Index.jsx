@@ -1,7 +1,80 @@
-import { useEffect } from "react";
-import sample_data from "./sample.json";
+import { useEffect, useState } from "react";
+import {
+  collection,
+  getDocs,
+  query,
+  limit,
+  orderBy,
+} from "firebase/firestore/lite";
+import { db } from "./firebase";
+
+var markets = [
+  "basketball_nba",
+  "icehockey_nhl",
+  "baseball_mlb",
+  "baseball_ncaa",
+  "americanfootball_nfl",
+  "americanfootball_ncaaf",
+];
 
 const ArbiTable = () => {
+  const [arbData, setArbData] = useState([]);
+
+  const calcOdds = (price_1, price_2) => {
+    if (price_1 < 0 && price_2 > 0) {
+      return (
+        100 *
+        ((1000 - (1000 / (1 - 100 / price_1) + 1000 / (price_2 / 100 + 1))) /
+          (1000 / (1 - 100 / price_1) + 1000 / (price_2 / 100 + 1)))
+      ).toFixed(2);
+    } else if (price_2 < 0 && price_1 > 0) {
+      return (
+        100 *
+        ((1000 - (1000 / (1 - 100 / price_2) + 1000 / (price_1 / 100 + 1))) /
+          (1000 / (1 - 100 / price_2) + 1000 / (price_1 / 100 + 1)))
+      ).toFixed(2);
+    } else {
+      return (
+        100 *
+        ((1000 - (1000 / (price_1 / 100 + 1) + 1000 / (price_2 / 100 + 1))) /
+          (1000 / (price_1 / 100 + 1) + 1000 / (price_2 / 100 + 1)))
+      ).toFixed(2);
+    }
+  };
+
+  useEffect(() => {
+    const getEventData = async () => {
+      markets.forEach(async (market) => {
+        const eventSnapshot = await getDocs(
+          query(collection(db, "arb_opportunities", market, "events"), limit(10))
+        );
+        eventSnapshot.forEach(async (event) => {
+          const arbSnapshot = await getDocs(
+            query(
+              collection(
+                db,
+                "arb_opportunities",
+                market,
+                "events",
+                event.id,
+                "arbs"
+              ),
+              limit(2)
+            )
+          );
+          arbSnapshot.forEach((arb) => {
+            let d = arb.data();
+            d.market = market;
+            d.percent = calcOdds(d.price_1, d.price_2);
+            setArbData((prev) => [...prev, d]);
+          });
+        });
+      });
+    };
+
+    getEventData();
+  }, []);
+
   return (
     <section className="wrapper mb-10 mt-[100px] md:mt-[120px]">
       <div className="contain flex-col justify-start items-start gap-7">
@@ -32,7 +105,7 @@ const ArbiTable = () => {
             <p className="text-white text-sm font-semibold">Event</p>
             <p className="text-white text-sm font-semibold">Bets</p>
           </div>
-          {sample_data.map((elem, idx) => {
+          {arbData.map((elem, idx) => {
             return <TableRow {...elem} key={idx + elem.timestamp} />;
           })}
         </div>
@@ -69,12 +142,16 @@ const TableRow = ({
         convert: "Baseball - MLB",
       },
       {
-        json: "americalfootball_nfl",
+        json: "americanfootball_nfl",
         convert: "Football - NFL",
       },
       {
         json: "americanfootball_ncaaf",
         convert: "Football - NCAAF",
+      },
+      {
+        json: "baseball_ncaa",
+        convert: "Baseball - NCAA",
       },
     ],
     books: [
@@ -96,7 +173,7 @@ const TableRow = ({
       },
       {
         json: "draftkings",
-        convert: "Draftkings",
+        convert: "DraftKings",
       },
       {
         json: "barstool",
@@ -129,9 +206,27 @@ const TableRow = ({
     ],
   };
 
+  const formatDate = (date) => {
+    var d = new Date(date);
+    var weekday = d.toLocaleDateString("en-US", {
+      weekday: "short",
+    });
+    var month = d.toLocaleDateString("en-US", {
+      month: "short",
+    });
+    var day = d.toLocaleDateString("en-US", {
+      day: "numeric",
+    });
+    var time = d.toLocaleString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+    return weekday + ", " + month + " " + day + " at " + time;
+  };
+
   return (
     <div className="grid grid-cols-5 min-w-[880px] place-items-center w-full border-b border-solid bg-[#fcfcfc] border-[#D1D1D1] py-2 min-h-[64px] px-4 ">
-      <p className="text-[#333] text-sm font-normal">{timestamp}</p>
+      <p className="text-[#333] text-sm font-normal">{formatDate(timestamp)}</p>
       <p className="text-[#333] text-sm font-normal">{percent}</p>
       <p className="text-[#333] text-sm font-normal">
         {
