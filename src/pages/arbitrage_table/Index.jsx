@@ -96,7 +96,7 @@ const TableRow = ({
       },
       {
         json: "draftkings",
-        convert: "Draftkings",
+        convert: "DraftKings",
       },
       {
         json: "barstool",
@@ -129,9 +129,24 @@ const TableRow = ({
     ],
   };
 
+  const formatDate = (date) => {
+    var d = new Date(date);
+    var weekday = d.toLocaleDateString("en-US", {
+      weekday: "short",
+    });
+    var month = d.toLocaleDateString("en-US", {
+      month: "short",
+    });
+    var day = d.toLocaleDateString("en-US", {
+      day: "numeric",
+    });
+    var time = d.toLocaleString("en-US", { hour: "2-digit", minute: "2-digit"});
+    return weekday + ", " + month + " " + day + " at " + time;
+  };
+
   return (
     <div className="grid grid-cols-5 min-w-[880px] place-items-center w-full border-b border-solid bg-[#fcfcfc] border-[#D1D1D1] py-2 min-h-[64px] px-4 ">
-      <p className="text-[#333] text-sm font-normal">{timestamp}</p>
+      <p className="text-[#333] text-sm font-normal">{formatDate(timestamp)}</p>
       <p className="text-[#333] text-sm font-normal">{percent}</p>
       <p className="text-[#333] text-sm font-normal">
         {
