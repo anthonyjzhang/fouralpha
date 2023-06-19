@@ -20,8 +20,8 @@ When arbitrage is detected, a record of it is created and stored in Firebase. Ou
 
 ## Pictures
 <div align="center">
-  <img src="home.png" width="666" height="383">
-  <img src="table.png" width="666" height="383">
+  <img src="images/home.png" width="666" height="383">
+  <img src="images/table.png" width="666" height="383">
 </div>
 <p align="center">
   Home Page and Arb Table
