@@ -1,4 +1,4 @@
-# Four Alpha | https://www.fouralpha.bet
+# 🎰 Four Alpha | https://www.fouralpha.bet
 
 ## Background
 
@@ -21,19 +21,24 @@ When arbitrage is detected, a record of it is created and stored in Firebase. Ou
 ## Pictures
 <div align="center">
   <img src="images/home.png" width="666" height="383">
-  <img src="images/table.png" width="666" height="383">
 </div>
 <p align="center">
-  Home Page and Arb Table
+  Home Page
+</p>
+<div align="center">
+  <img src="images/table2.png" width="666" height="383">
+</div>
+<p align="center">
+  Arbitrage Table
 </p>
 
 ## Technlogies
-- ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
-- ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
-- ![Firebase](https://img.shields.io/badge/Firebase-039BE5?style=for-the-badge&logo=Firebase&logoColor=white)
-- ![Vercel](https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white)
 - ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+- ![Firebase](https://img.shields.io/badge/firebase-ffca28?style=for-the-badge&logo=firebase&logoColor=black)
+- ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 - ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+- ![TailwindCSS](https://img.shields.io/badge/Tailwind%20CSS-06B6D4.svg?style=for-the-badge&logo=Tailwind-CSS&logoColor=white) 
+- ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)DF1E)
 
 ---
 *© 2023 Four Alpha*
