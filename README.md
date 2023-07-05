@@ -1,4 +1,4 @@
-# 🎰 Four Alpha | https://www.fouralpha.bet
+# 🎰 Four Alpha | www.fouralpha.bet
 
 ## Background
 
